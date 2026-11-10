@@ -1,0 +1,100 @@
+{
+  "source_sha256": "0df60364f08867b206f3fb235387f7e126864860e9bdffff462fe943b713e064",
+  "run_id": "1794281401",
+  "results": [
+    {
+      "name": "backend_tests",
+      "command": [
+        "C:\\Users\\Playdata\\aio4\\meeting-agent\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "tests",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\Playdata\\aio4\\meeting-agent\\var\\pytest-1794281401"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "backend_lint",
+      "command": [
+        "C:\\Users\\Playdata\\aio4\\meeting-agent\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "backend_format",
+      "command": [
+        "C:\\Users\\Playdata\\aio4\\meeting-agent\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend_types",
+      "command": [
+        "C:\\Users\\Playdata\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.EXE",
+        "node_modules/typescript/bin/tsc",
+        "-b"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend_tests",
+      "command": [
+        "C:\\Users\\Playdata\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.EXE",
+        "node_modules/vitest/vitest.mjs",
+        "run"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend_lint",
+      "command": [
+        "C:\\Users\\Playdata\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.EXE",
+        "node_modules/eslint/bin/eslint.js",
+        "src"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend_build",
+      "command": [
+        "C:\\Users\\Playdata\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.EXE",
+        "node_modules/vite/bin/vite.js",
+        "build"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "C:\\Users\\Playdata\\aio4\\meeting-agent\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\Playdata\\aio4\\meeting-agent\\docs\\automation\\export_openapi.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ui",
+      "command": [
+        "C:\\Users\\Playdata\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "external_live": "NOT_RUN; no real credentials or sends",
+  "postgres": "NOT_RUN; PG_TEST_URL unavailable"
+}

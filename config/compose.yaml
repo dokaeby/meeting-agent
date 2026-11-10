@@ -1,0 +1,54 @@
+name: meeting-agent
+x-backend: &backend
+  build: ../backend
+  env_file: ../.env
+  environment:
+    MA_DATABASE_URL: postgresql+psycopg://meeting_runtime:${DB_RUNTIME_PASSWORD:?set DB_RUNTIME_PASSWORD}@db:5432/meeting
+    MA_REDIS_URL: redis://redis:6379/0
+    MA_SMTP_HOST: mailpit
+    MA_STORAGE_PATH: /app/var/files
+  volumes: [files:/app/var/files]
+  depends_on:
+    db: {condition: service_healthy}
+    redis: {condition: service_started}
+    migrate: {condition: service_completed_successfully}
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: meeting_owner
+      POSTGRES_PASSWORD: ${DB_OWNER_PASSWORD:?set DB_OWNER_PASSWORD}
+      POSTGRES_DB: meeting
+      DB_RUNTIME_PASSWORD: ${DB_RUNTIME_PASSWORD:?set DB_RUNTIME_PASSWORD}
+    volumes:
+      - pg:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    healthcheck: {test: [CMD-SHELL, pg_isready -U meeting_owner -d meeting], interval: 3s, retries: 20}
+  redis:
+    image: redis:7-alpine
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["127.0.0.1:8025:8025"]
+  migrate:
+    build: ../backend
+    env_file: ../.env
+    environment:
+      MA_DATABASE_URL: postgresql+psycopg://meeting_owner:${DB_OWNER_PASSWORD:?set DB_OWNER_PASSWORD}@db:5432/meeting
+    depends_on:
+      db: {condition: service_healthy}
+    command: [alembic, upgrade, head]
+  api:
+    <<: *backend
+    ports: ["127.0.0.1:8000:8000"]
+  worker:
+    <<: *backend
+    command: [celery, -A, meeting_agent.jobs.worker:app, worker, --loglevel=WARNING]
+  beat:
+    <<: *backend
+    command: [celery, -A, meeting_agent.jobs.worker:app, beat, --loglevel=WARNING, --schedule=/app/var/celerybeat]
+  web:
+    build: ../frontend
+    ports: ["127.0.0.1:5173:80"]
+    depends_on: [api]
+volumes: {pg: {}, files: {}}
+

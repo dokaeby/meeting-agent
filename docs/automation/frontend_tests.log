@@ -1,0 +1,12 @@
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/Playdata/aio4/meeting-agent/frontend[39m
+
+ [32m✓[39m src/features/meetings/tests/model.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 2[2mms[22m[39m
+ [32m✓[39m src/features/meetings/tests/viewmodel.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 163[2mms[22m[39m
+ [32m✓[39m src/features/auth/tests/auth.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 233[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 12:30:16
+[2m   Duration [22m 1.68s[2m (transform 89ms, setup 736ms, collect 270ms, tests 398ms, environment 1.79s, prepare 552ms)[22m
+
